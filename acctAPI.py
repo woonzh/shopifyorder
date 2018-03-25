@@ -63,7 +63,7 @@ class Accounts(Resource):
             return msg
         
 class Orders(Resource):    
-    def get(self):
+    def post(self):
         df=orr.main("woonzh")
         resp = make_response(df.to_csv())
         resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
