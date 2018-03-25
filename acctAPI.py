@@ -64,9 +64,9 @@ class Accounts(Resource):
         
 class Orders(Resource):    
     def get(self):
-        name = request.args.get('name', default = "woonzh", type = str)
+        name = request.args.get('name', default = "k-bella-swim", type = str)
         print(name)
-        df=orr.main("woonzh")
+        df=orr.main(name)
         resp = make_response(df.to_csv(header=True, index=False))
         resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
         resp.headers["Content-Type"] = "text/csv"
