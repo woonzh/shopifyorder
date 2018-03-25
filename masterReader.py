@@ -5,68 +5,13 @@ Created on Tue Dec  5 15:57:31 2017
 @author: woon.zhenhao
 """
 
-import os
-from openpyxl import load_workbook
 from datetime import datetime
 import pandas as pd
 
-ordHist='order history'
-ordTemplate='sv upload template'
-ordUpload='sv upload/SV upload '
-invenLogger='inventory updates/inven updates '
-
-def readReport(folderName):
-    found = False
+ordUpload='SV upload '
     
-    for f in os.listdir('./'+folderName):
-        if f[:1]!= '~':
-            name=f
-            found = True
-    
-    if found==True:
-        wbname=folderName+'/'+name
-        wb=load_workbook(folderName+'/'+name)
-        ws=wb.worksheets[0]
-        
-        return True, wb, ws, wbname
-    
-    else:
-        return False, None
-    
-def getOrdList():
-    found,wb,ws, wbname = readReport(ordHist)
-    
-    if found:       
-        ls=[]
-        
-        row=int(ws.max_row)
-        if row > 1:
-            for r in range(2,row+1):
-                ls.append(ws.cell(r,1).internal_value)
-        
-    return found,ls
-
-#ls=getOrdList()
-
-def writeToMaster(ls):
-    found, wb, ws, wbname = readReport(ordHist)
-    
-    if found:
-        row=int(ws.max_row)+1
-        
-        for i in ls.index:
-            r=ls.loc[i]
-            ws.cell(row=row,column=1).value = r[0]
-            ws.cell(row=row,column=2).value = r[1]
-            ws.cell(row=row,column=3).value = r[2]
-            ws.cell(row=row,column=4).value = r[3]
-            row+=1        
-    wb.save(wbname)
-    
-def writeToTemplate(df, account):
-    found, wb, ws, wbname = readReport(ordTemplate)
-    
-    header = next(ws.values)[0:]
+def writeToTemplate(df, account):    
+    header =['SO Identifier', 'Item SKU', 'Payment Terms', 'Ship Date', 'Ship Time', 'Ship to Contact', 'Ship to Company', 'Ship to Address 1', 'Ship to Address 2', 'Ship to Unit #', 'Ship to Postal Code', 'Ship to Phone', 'Qty', 'Price per Item', 'Price per SO', 'Remarks (Shipping) - visible to deliveryman', 'Remarks (WMS internal)', 'Country Name']
     
     df.columns = header
         

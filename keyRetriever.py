@@ -6,6 +6,9 @@ Created on Wed Jan 24 10:12:00 2018
 """
 
 import pandas as pd
+import os
+from urllib import parse
+import psycopg2 as ps
 
 link = 'keys/keys.csv'
 
@@ -16,42 +19,46 @@ urlExten={
 
 shop_url=''
 
-def queryAcct():
-    df = pd.read_csv(link)
+def connectToDatabase(url):
+    os.environ['DATABASE_URL'] = url
+               
+    parse.uses_netloc.append('postgres')
+    url=parse.urlparse(os.environ['DATABASE_URL'])
     
-    accList = df['shop name']
-    count = 1
+    conn=ps.connect(
+            database=url.path[1:],
+            user=url.username,
+            password=url.password,
+            host=url.hostname,
+            port=url.port
+            )
     
-    cont = True
-    df2={}
+    cur=conn.cursor()
     
-    while cont:
-        print("Choose the shopify account")
-        for i in list(accList):
-            print(str(count)+") "+str(i))
-            count+=1
-        
-        choice = input("Account index: ")
-        
-        try:
-            choice = int(choice)
-            if (choice > 0) and (choice<count):
-                cont = False
-                df2={}
-                for j in list(df):
-                    df2[j]=df[j][choice-1]
-            else:
-                print("Please choose a number between 0 and " + str(count-1))
-        except ValueError:
-            print("Please choose a number between 1 and " + str(count-1))
+    return cur, conn
 
-    return accList[choice-1],df2
-
-def getMainUrl():
-    acct, keys = queryAcct()
-    shop_url = "https://%s:%s@%s.myshopify.com/admin/" % (keys['API Key'], keys['Password'], keys['shop name'])
+def queryAcct(shopName):
+    url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+    query="SELECT apikey, pass, shopname FROM keys WHERE shopname='"+str(shopName)+"'"
+    cur, conn=connectToDatabase(url)
+    cur.execute(query)
     
-    return acct, shop_url
+    data=cur.fetchone()
+    key = data[0]
+    password = data[1]
+    name = data[2]
+    
+    conn.commit()    
+    cur.close()
+    conn.close()
+        
+    return key, password, name
+
+def getMainUrl(shopName):
+    key, password, name = queryAcct(shopName)
+    shop_url = "https://%s:%s@%s.myshopify.com/admin/" % (key, password, name)
+    
+    return shop_url
 
 def getUrl(url, name):
     
@@ -59,12 +66,4 @@ def getUrl(url, name):
     
     return final_url
 
-def testing(name):
-    df = pd.read_csv(link)
-    
-    shop_url = "https://%s:%s@%s.myshopify.com/admin/" % (df['API Key'][0], df['Password'][0], df['shop name'][0])
-    
-    final_url = shop_url + urlExten[name]
-    
-    return final_url
-
+url=getMainUrl("woonzh")

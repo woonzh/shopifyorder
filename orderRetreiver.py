@@ -7,11 +7,10 @@ Created on Mon Feb 19 10:37:40 2018
 
 import keyRetriever as kr
 import connector as con
-import masterReader as mr
 import json
 import pandas as pd
 import datetime
-import log
+import masterReader as mr
 
 url = ''
 ordHist=''
@@ -33,31 +32,18 @@ def init(acct,mainUrl):
     url = kr.getUrl(mainUrl, "orders")
     newRec = pd.DataFrame(columns = ['order number', 'price', 'date', 'account'])
     summary=''
-    log.clearMsg()
 
-def test():
-    url=kr.testing("orders")
-    success, response = con.connect(url, "", "get")
-    response = json.loads(response)
-    df=process(response)
-    orders = listOrderLines(df)
-    writeToFile("woonzh", orders)
-    return response, df, orders
-
-def main(acct, mainUrl):
-    init(acct, mainUrl)
-    global ordHist
+def main(shopName):
+    mainUrl=kr.getMainUrl(shopName)
+    init(shopName, mainUrl)
     
     success, response = con.connect(url, "", "get")
     
     if success:
-        found, ordHist = mr.getOrdList()
         orders = process(json.loads(response))
         orderDf = listOrderLines(orders)
-        writeToFile(acct, orderDf)
-        mr.writeToMaster(newRec)
+        writeToFile(shopName, orderDf)
         writeSummary()
-        log.log("orders",account,summary)
     
     return orders
 
@@ -102,7 +88,6 @@ def listOrderLines(orders):
             
             ls=[so, sku, paymentTerms, '', '', contact, '', addressLine, '', '', postal, phone, qty, unitPrice,totPrice, '','',country]
             msg=str(so)+' - '+str(sku)+' - '+str(qty)+' - '+str(unitPrice)+' - '+str(totPrice)
-            log.logMsg(msg)
             
             df.loc[str(count)]=ls
             count+=1
@@ -117,12 +102,6 @@ def orderOk(tem):
         if tem["financial_status"]=="authorized" and len(tem["fulfillments"])==0:
             unfulfilOrds+=1
             newUnfulfilOrds+=1
-            ordNum = tem["order number"]
-            for i in ordHist:
-#                print(i)
-                if str(ordNum) == str(i):
-                    newUnfulfilOrds-=1
-                    return False
             timenow=datetime.datetime.now()
             ls=[tem["order number"], tem["total_price"], timenow.strftime('%d-%m-%Y %H:%m'), account]
             newRec.loc[str(len(newRec)+1)]=ls
@@ -159,5 +138,4 @@ def process(response):
             
     return df
        
-#found, ordHist = mr.getOrdList() 
-#response, df, orders=test()
+orders=main("woonzh")

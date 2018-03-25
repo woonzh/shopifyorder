@@ -25,10 +25,3 @@ def connect(url, body, callType):
         return True, response.content
     else:
         return False, "Failed connection"
-    
-
-url=kr.testing("orders")
-
-suc, response = connect(url,'','get')
-
-df=json.loads(response)
