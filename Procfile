@@ -1,1 +1,2 @@
-web: gunicorn acctAPI:acctAPI
+
+web: gunicorn acctAPI:app
