@@ -32,7 +32,7 @@ class Accounts(Resource):
         
         return cur, conn
     
-    def post(url, query):
+    def post():
         url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
         query="SELECT * FROM keys"
         lst=[]
