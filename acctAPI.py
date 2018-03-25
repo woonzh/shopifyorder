@@ -69,6 +69,7 @@ class Orders(Resource):
         name, df=orr.main(name)
         resp = make_response(df.to_csv(header=True, index=False))
         resp.headers["Content-Disposition"] = "attachment; filename="+name
+        resp.headers['Access-Control-Allow-Origin'] = '*'
         resp.headers["Content-Type"] = "text/csv"
         return resp
 
