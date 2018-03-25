@@ -9,7 +9,9 @@ import requests
 
 url='https://shopifyorder.herokuapp.com/orders'
 
-response = requests.get(url)
+param={"name":"woonzh"}
+
+response = requests.get(url, data=param)
 #df=json.loads(response.content)
 
 print(response.content)
