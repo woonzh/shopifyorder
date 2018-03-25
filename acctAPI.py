@@ -51,8 +51,6 @@ class Accounts(Resource):
                     }
             
             cur.close()
-            self.send_header("Access-Control-Allow-Origin", "*")
-            self.end_headers()
             return result
         except ps.Error as e:
             msg=e.pgerror
@@ -60,7 +58,5 @@ class Accounts(Resource):
 
 api.add_resource(Accounts, '/accounts')
 
-#if __name__ == '__main__':
-#     app.run(debug=True)
-    
-    
+if __name__ == '__main__':
+     app.run(debug=True)
