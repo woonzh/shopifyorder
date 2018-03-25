@@ -6,7 +6,6 @@ Created on Sun Mar 25 15:22:54 2018
 """
 
 import requests
-import json
 
 url='https://shopifyorder.herokuapp.com/accounts'
 

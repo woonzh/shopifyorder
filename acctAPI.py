@@ -12,7 +12,7 @@ from urllib import parse
 import psycopg2 as ps
 import os
 import json
-import orderRetriver as orr
+#import orderRetriver as orr
 
 app = Flask(__name__)
 api = Api(app)
