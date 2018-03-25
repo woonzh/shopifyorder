@@ -5,6 +5,7 @@ Created on Sat Mar 24 17:34:54 2018
 @author: woon.zhenhao
 """
 from flask import Flask, request
+from flask_cors import CORS
 from flask_restful import Resource, Api
 from urllib import parse
 import psycopg2 as ps
@@ -13,6 +14,7 @@ import json
 
 app = Flask(__name__)
 api = Api(app)
+CORS(app)
 
 class Accounts(Resource):    
     def connectToDatabase(url):
@@ -58,7 +60,7 @@ class Accounts(Resource):
 
 api.add_resource(Accounts, '/accounts')
 
-if __name__ == '__main__':
-     app.run(debug=True)
+#if __name__ == '__main__':
+#     app.run(debug=True)
     
     
