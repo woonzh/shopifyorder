@@ -53,7 +53,7 @@ class Accounts(Resource):
                     }
             
             cur.close()
-            resp = flask.Response(str(result))
+            resp = flask.Response(json.dumps(result))
             resp.headers['Access-Control-Allow-Origin'] = '*'
             return resp
         except ps.Error as e:
