@@ -53,7 +53,7 @@ class Accounts(Resource):
             return result
             
             cur.close()
-            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Origin", True)
             self.end_headers()
         except ps.Error as e:
             msg=e.pgerror
