@@ -66,9 +66,9 @@ class Orders(Resource):
     def get(self):
         name = request.args.get('name', default = "k-bella-swim", type = str)
         print(name)
-        df=orr.main(name)
+        name, df=orr.main(name)
         resp = make_response(df.to_csv(header=True, index=False))
-        resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        resp.headers["Content-Disposition"] = "attachment; filename="+name
         resp.headers["Content-Type"] = "text/csv"
         return resp
 
