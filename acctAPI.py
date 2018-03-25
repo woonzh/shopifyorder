@@ -52,6 +52,9 @@ class Accounts(Resource):
                     }
             
             cur.close()
+            
+            response=Flask.jsonify(result)
+            response.headers.add('Access-Control-Allow-Origin', '*')
             return result
         except ps.Error as e:
             msg=e.pgerror
