@@ -12,7 +12,7 @@ from urllib import parse
 import psycopg2 as ps
 import os
 import json
-#import orderRetriver as orr
+import orderRetreiver as orr
 
 app = Flask(__name__)
 api = Api(app)
@@ -62,16 +62,16 @@ class Accounts(Resource):
             msg=e.pgerror
             return msg
         
-#class Orders(Resource):    
-#    def get(self):
-#        df=orr.main("woonzh")
-#        resp = make_response(df.to_csv())
-#        resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
-#        resp.headers["Content-Type"] = "text/csv"
-#        return resp
+class Orders(Resource):    
+    def get(self):
+        df=orr.main("woonzh")
+        resp = make_response(df.to_csv())
+        resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
+        resp.headers["Content-Type"] = "text/csv"
+        return resp
 
 api.add_resource(Accounts, '/accounts')
-#api.add_resource(Orders, '/orders')
+api.add_resource(Orders, '/orders')
 
 if __name__ == '__main__':
      app.run(debug=True)
