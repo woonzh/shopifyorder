@@ -65,7 +65,7 @@ class Accounts(Resource):
 class Orders(Resource):    
     def get(self):
         df=orr.main("woonzh")
-        resp = make_response(df.to_csv())
+        resp = make_response(df.to_csv(header=True, index=False))
         resp.headers["Content-Disposition"] = "attachment; filename=export.csv"
         resp.headers["Content-Type"] = "text/csv"
         return resp

@@ -58,9 +58,10 @@ def writeToFile(acct, orders):
     mr.writeToTemplate(orders, acct)
 
 def listOrderLines(orders):
-    df=pd.DataFrame(columns = ['so', 'sku', 'payment terms', 'ship date', 'ship time', 'ship contact', 'ship company', 
-                               'ship add', 'ship add2', 'ship to unit', 'ship to postal', 'ship to phone', 'qty', 
-                               'unit price', 'total price', 'remarks external', 'remarks internal', 'country'])
+    df=pd.DataFrame(columns = ['SO Identifier', 'Item SKU', 'Payment Terms', 'Ship Date', 'Ship Time', 'Ship to Contact', 
+                               'Ship to Company', 'Ship to Address 1', 'Ship to Address 2', 'Ship to Unit #', 
+                               'Ship to Postal Code', 'Ship to Phone', 'Qty', 'Price per Item', 'Price per SO', 
+                               'Remarks (Shipping) - visible to deliveryman', 'Remarks (WMS internal)', 'Country Name'])
     
     count=1
     global newLineItems
