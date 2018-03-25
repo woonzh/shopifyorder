@@ -50,11 +50,10 @@ class Accounts(Resource):
                     "names":lst
                     }
             
-            return result
-            
             cur.close()
-            self.send_header("Access-Control-Allow-Origin", True)
+            self.send_header("Access-Control-Allow-Origin", "*")
             self.end_headers()
+            return result
         except ps.Error as e:
             msg=e.pgerror
             return msg
