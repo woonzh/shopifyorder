@@ -9,6 +9,7 @@ from flask_restful import Resource, Api
 from urllib import parse
 import psycopg2 as ps
 import os
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -48,7 +49,7 @@ class Accounts(Resource):
                     "names":lst
                     }
             
-            return result
+            return json.dumps(result)
             
             cur.close()
         except ps.Error as e:
