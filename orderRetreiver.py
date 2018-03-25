@@ -42,10 +42,10 @@ def main(shopName):
     if success:
         orders = process(json.loads(response))
         orderDf = listOrderLines(orders)
-        writeToFile(shopName, orderDf)
+#        writeToFile(shopName, orderDf)
         writeSummary()
     
-    return orders
+    return orderDf
 
 def writeSummary():
     global summary
