@@ -49,7 +49,7 @@ class Accounts(Resource):
                     "names":lst
                     }
             
-            return result
+            return json.dumps(result)
             
             cur.close()
         except ps.Error as e:
@@ -60,4 +60,5 @@ api.add_resource(Accounts, '/accounts')
 
 if __name__ == '__main__':
      app.run(debug=True)
+    
     
