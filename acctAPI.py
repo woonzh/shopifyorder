@@ -14,7 +14,6 @@ import json
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)
 
 class Accounts(Resource):    
     def connectToDatabase(url):
