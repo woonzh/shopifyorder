@@ -44,12 +44,16 @@ class Accounts(Resource):
                 name=result[1]
                 lst.append(name)
                 
+            result={
+                    "names":lst
+                    }
+            
+            return result
+            
             cur.close()
         except ps.Error as e:
             msg=e.pgerror
-            lst.append(msg)
-        
-        return lst
+            return msg
 
 api.add_resource(Accounts, '/accounts')
 

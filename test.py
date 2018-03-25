@@ -9,6 +9,6 @@ import requests
 
 url='https://shopifyorder.herokuapp.com/accounts'
 
-response = requests.post(url)
+response = requests.get(url)
 
 print(response.content)
