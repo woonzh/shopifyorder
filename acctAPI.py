@@ -51,11 +51,8 @@ class Accounts(Resource):
         
         return lst
 
-#api.add_resource(Accounts, '/accounts')
-#
-#if __name__ == '__main__':
-#     app.run(debug=True)
+api.add_resource(Accounts, '/accounts')
 
-t= Accounts
-msg=t.post('')
+if __name__ == '__main__':
+     app.run(debug=True)
     
