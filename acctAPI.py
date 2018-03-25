@@ -49,7 +49,7 @@ class Accounts(Resource):
                     "names":lst
                     }
             
-            return json.dumps(result)
+            return result
             
             cur.close()
         except ps.Error as e:

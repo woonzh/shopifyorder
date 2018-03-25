@@ -11,6 +11,6 @@ import json
 url='https://shopifyorder.herokuapp.com/accounts'
 
 response = requests.get(url)
-df=json.loads(response.content)
+#df=json.loads(response.content)
 
 print(response.content)
