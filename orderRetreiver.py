@@ -42,10 +42,10 @@ def main(shopName):
     if success:
         orders = process(json.loads(response))
         orderDf = listOrderLines(orders)
-#        writeToFile(shopName, orderDf)
+        name = shopName+' '+datetime.now().strftime("%d-%m-%y_%H-%M-%S")+'.csv'
         writeSummary()
     
-    return orderDf
+    return name, orderDf
 
 def writeSummary():
     global summary
