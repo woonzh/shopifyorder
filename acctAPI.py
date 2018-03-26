@@ -64,8 +64,10 @@ class Accounts(Resource):
         
 class Orders(Resource):    
     def get(self):
-        name = request.args.get("name", default = "k-bella-swim", type = str)
+        name = request.args.get("name", type = str)
         print(name)
+        if name == "":
+            name="k-bella-swim"
         name, df=orr.main(name)
         resp = make_response(df.to_csv(header=True, index=False))
         resp.headers["Content-Disposition"] = "attachment; filename="+name
