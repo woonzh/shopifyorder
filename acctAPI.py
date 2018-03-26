@@ -64,7 +64,7 @@ class Accounts(Resource):
         
 class Orders(Resource):    
     def get(self):
-        name = request.args.get('name', default = "k-bella-swim", type = str)
+        name = request.args.get("name", default = "k-bella-swim", type = str)
         print(name)
         name, df=orr.main(name)
         resp = make_response(df.to_csv(header=True, index=False))
