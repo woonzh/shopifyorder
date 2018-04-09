@@ -3,7 +3,6 @@ function butClick(){
   var e = document.getElementById("cust_list");
   var shopName = e.options[e.selectedIndex].value;
   var finalUrl=url+'?name='+shopName;
-  alert(finalUrl);
   $.ajax({
     url: finalUrl,
     type: 'GET',
