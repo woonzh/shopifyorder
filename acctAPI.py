@@ -83,6 +83,7 @@ class CreateAccount(Resource):
     
     def get(self):
         lst=[]
+        result={}
         lst.append(request.args.get("name" ,type = str))
         print("name:"+lst[0])
         lst.append(request.args.get("email" ,type = str))
@@ -100,7 +101,6 @@ class CreateAccount(Resource):
                 query+=","
             track+=1
         query +=")"
-        
         print(query)
         try:
             cur, conn=Accounts.connectToDatabase(url)
@@ -108,9 +108,13 @@ class CreateAccount(Resource):
             cur.close()
             conn.commit()
             
-            return query
+            result['result']="Success"
+            print("success")
+            return result
         except ps.Error as e:
-            return e.pgerror
+            result['result']="fail"
+            print("fail")
+            return result
         
 class Orders(Resource):    
     def get(self):
