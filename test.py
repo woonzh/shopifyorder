@@ -8,12 +8,12 @@ Created on Sun Mar 25 15:22:54 2018
 import requests
 import json
 
-url='https://shopifyorder.herokuapp.com/orders'
-
-param={"name":"woonzh"}
-
-response = requests.get(url, params=param)
-print(response.content)
+#url='https://shopifyorder.herokuapp.com/orders'
+#
+#param={"name":"woonzh"}
+#
+#response = requests.get(url, params=param)
+#print(response.content)
 
 #param={
 #       "name":"woonzh",

@@ -99,7 +99,8 @@ class CreateAccount(Resource):
                 query+=","
             track+=1
         query +=")"
-            
+        
+        print(query)
         try:
             cur, conn=Accounts.connectToDatabase(url)
             cur.execute(query)
