@@ -103,6 +103,9 @@ class CreateAccount(Resource):
         try:
             cur, conn=Accounts.connectToDatabase(url)
             cur.execute(query)
+            cur.close()
+            conn.commit()
+            
             return query
         except ps.Error as e:
             return e.pgerror
