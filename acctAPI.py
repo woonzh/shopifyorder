@@ -110,11 +110,13 @@ class CreateAccount(Resource):
             
             result['result']="Success"
             print("success")
-            return result
         except ps.Error as e:
             result['result']="fail"
             print("fail")
-            return result
+        
+        resp = flask.Response(json.dumps(result))
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
         
 class Orders(Resource):    
     def get(self):
