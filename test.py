@@ -15,5 +15,6 @@ param={"name":"k-bella-swim"}
 #response = requests.get(url, params=param)
 #print(response.content)
 
+url='https://shopifyorder.herokuapp.com/createAccount'
 response = requests.post(url)
 print(response.content)

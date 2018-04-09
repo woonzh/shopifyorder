@@ -62,9 +62,44 @@ class Accounts(Resource):
             msg=e.pgerror
             return msg
 
-class CreateAccount(Resource): 
+class CreateAccount(Resource):
+    def connectToDatabase(url):
+        os.environ['DATABASE_URL'] = url
+                   
+        parse.uses_netloc.append('postgres')
+        url=parse.urlparse(os.environ['DATABASE_URL'])
+        
+        conn=ps.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+                )
+        
+        cur=conn.cursor()
+        
+        return cur, conn
+    
     def post(self):
-        return "success"
+        lst=[]
+        lst.append(request.args.get("name" ,type = str))
+        lst.append(request.args.get("email" ,type = str))
+        lst.append(request.args.get("apikey" ,type = str))
+        lst.append(request.args.get("password" ,type = str))
+        lst.append(request.args.get("sharedsecret" ,type = str))
+        url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+        query="SELECT INTO keys (email, shopname, apikey, pass, sharedsecret) VALUES ("
+        for param in lst:
+            query = query + "'"+param+"'"
+        query+=")"
+            
+        try:
+            cur, conn=Accounts.connectToDatabase(url)
+            cur.execute(query)
+            return "success"
+        except ps.Error as e:
+            return "fail"
        
 class Orders(Resource):    
     def get(self):
