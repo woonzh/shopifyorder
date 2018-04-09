@@ -99,7 +99,8 @@ class CreateAccount(Resource):
             cur.execute(query)
             return query
         except ps.Error as e:
-            return ps.Error
+            return e.pgerror
+        
 class Orders(Resource):    
     def get(self):
         name = request.args.get("name" ,type = str)
