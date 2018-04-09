@@ -97,10 +97,9 @@ class CreateAccount(Resource):
         try:
             cur, conn=Accounts.connectToDatabase(url)
             cur.execute(query)
-            return "success"
+            return query
         except ps.Error as e:
-            return "fail"
-       
+            return query
 class Orders(Resource):    
     def get(self):
         name = request.args.get("name" ,type = str)
