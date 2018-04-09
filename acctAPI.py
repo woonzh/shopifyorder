@@ -84,7 +84,7 @@ class CreateAccount(Resource):
     def post(self):
         lst=[]
         lst.append(request.args.get("name" ,type = str))
-        print(lst[0])
+        print("name:"+lst[0])
         lst.append(request.args.get("email" ,type = str))
         lst.append(request.args.get("apikey" ,type = str))
         lst.append(request.args.get("password" ,type = str))
