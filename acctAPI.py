@@ -81,7 +81,7 @@ class CreateAccount(Resource):
         
         return cur, conn
     
-    def post(self):
+    def get(self):
         lst=[]
         lst.append(request.args.get("name" ,type = str))
         print("name:"+lst[0])
