@@ -62,6 +62,9 @@ class Accounts(Resource):
             msg=e.pgerror
             return msg
         
+    def post(self):
+        return "success"
+        
 class Orders(Resource):    
     def get(self):
         name = request.args.get("name" ,type = str)
