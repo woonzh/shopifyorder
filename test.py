@@ -12,7 +12,8 @@ url='https://shopifyorder.herokuapp.com/orders'
 
 param={"name":"k-bella-swim"}
 
-response = requests.get(url, params=param)
-#df=json.loads(response.content)
+#response = requests.get(url, params=param)
+#print(response.content)
 
+response = requests.post(url)
 print(response.content)

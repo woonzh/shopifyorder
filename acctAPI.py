@@ -61,10 +61,11 @@ class Accounts(Resource):
         except ps.Error as e:
             msg=e.pgerror
             return msg
-        
+
+class CreateAccount(Resource): 
     def post(self):
         return "success"
-        
+       
 class Orders(Resource):    
     def get(self):
         name = request.args.get("name" ,type = str)
@@ -78,6 +79,7 @@ class Orders(Resource):
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Orders, '/orders')
+api.add_resource(CreateAccount, "/createAccount")
 
 if __name__ == '__main__':
      app.run(debug=True)
