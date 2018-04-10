@@ -102,7 +102,8 @@ def orderOk(tem):
     global unfulfilOrds, newUnfulfilOrds, ordHist
     
     try:
-        if tem["financial_status"]=="authorized" and len(tem["fulfillments"])==0:
+#        if tem["financial_status"]=="authorized" and len(tem["fulfillments"])==0:
+        if len(tem["fulfillments"])==0:
             unfulfilOrds+=1
             newUnfulfilOrds+=1
             timenow=datetime.datetime.now()
