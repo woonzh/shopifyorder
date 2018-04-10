@@ -72,7 +72,7 @@ def listOrderLines(orders):
     for ind in orders:
         i = orders[ind]
         so=i["order number"]
-        paymentTerms = 'Paid'
+        paymentTerms = i['financial_status']
         customer = i["customer"]
         contact = customer["first_name"]+ " " + customer["last_name"]
         address = customer["default_address"]
@@ -103,7 +103,7 @@ def orderOk(tem):
     
     try:
 #        if tem["financial_status"]=="authorized" and len(tem["fulfillments"])==0:
-        if len(tem["fulfillments"])==0:
+        if len(tem["fulfillments"])==0 and (tem["financial_status"]=="paid" or tem["financial_status"]=="authorized"):
             unfulfilOrds+=1
             newUnfulfilOrds+=1
             timenow=datetime.datetime.now()
@@ -141,5 +141,3 @@ def process(response):
             count +=1
             
     return df
-
-#name, orderDf=main('woonzh')
