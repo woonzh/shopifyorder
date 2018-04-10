@@ -45,8 +45,9 @@ def main(shopName):
         orderDf = listOrderLines(orders)
         name = shopName+' '+datetime.datetime.now().strftime("%d-%m-%y_%H-%M-%S")+'.csv'
         writeSummary()
-    
-    return name, orderDf
+        return name, orderDf
+    else:
+        return "fail", response
 
 def writeSummary():
     global summary
@@ -139,3 +140,5 @@ def process(response):
             count +=1
             
     return df
+
+#name, orderDf=main('woonzh')
