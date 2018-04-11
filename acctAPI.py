@@ -13,6 +13,7 @@ import psycopg2 as ps
 import os
 import json
 import orderRetreiver as orr
+import keyRetriever as kr
 
 app = Flask(__name__)
 api = Api(app)
@@ -85,35 +86,44 @@ class CreateAccount(Resource):
         lst=[]
         result={}
         lst.append(request.args.get("name" ,type = str))
-        print("name:"+lst[0])
         lst.append(request.args.get("email" ,type = str))
         lst.append(request.args.get("apikey" ,type = str))
         lst.append(request.args.get("password" ,type = str))
         lst.append(request.args.get("sharedsecret" ,type = str))
         
-        lstLen=len(lst)
-        track=1
-        url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
-        query="INSERT INTO keys (shopname, email, apikey, pass, sharedsecret) VALUES ("
-        for param in lst:
-            query = query + "'"+param+"'"
-            if track<lstLen:
-                query+=","
-            track+=1
-        query +=")"
-        print(query)
-        try:
-            cur, conn=Accounts.connectToDatabase(url)
-            cur.execute(query)
-            cur.close()
-            conn.commit()
-            
-            result['result']="Success"
-            print("success")
-        except ps.Error as e:
-            result['result']="fail"
-            print("fail")
+        acctValid=kr.validateAcct(lst[2],lst[3],lst[0])
         
+        if acctValid:
+            lstLen=len(lst)
+            track=1
+            url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+            query="INSERT INTO keys (shopname, email, apikey, pass, sharedsecret) VALUES ("
+            for param in lst:
+                query = query + "'"+param+"'"
+                if track<lstLen:
+                    query+=","
+                track+=1
+            query +=")"
+            print(query)
+            try:
+                cur, conn=Accounts.connectToDatabase(url)
+                cur.execute(query)
+                cur.close()
+                conn.commit()
+                
+                result['result']="Success"
+                print("success")
+            except ps.Error as e:
+                result['result']="fail"
+                print("fail")
+            
+            resp = flask.Response(json.dumps(result))
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            return resp
+        else:
+            result['result']="Account credential invalid"
+            print("fail")
+            
         resp = flask.Response(json.dumps(result))
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp

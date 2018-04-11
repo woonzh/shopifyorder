@@ -9,12 +9,14 @@ import pandas as pd
 import os
 from urllib import parse
 import psycopg2 as ps
+import connector as con
 
 link = 'keys/keys.csv'
 
 urlExten={
         "inventory": "products.json",
-        "orders": "orders.json"
+        "orders": "orders.json",
+        "locations":"locations/count.json"
         }
 
 shop_url=''
@@ -65,5 +67,14 @@ def getUrl(url, name):
     final_url = url+urlExten[name]
     
     return final_url
+
+def validateAcct(key, password, name):
+    mainurl= "https://%s:%s@%s.myshopify.com/admin/" % (key, password, name)
+    url=getUrl(mainurl,"locations")
+    response=con.connect(url,"","get")
+    if response[0]==True:
+        return True
+    else:
+        return False
 
 #url=getMainUrl("woonzh")

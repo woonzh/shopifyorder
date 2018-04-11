@@ -16,7 +16,7 @@ url='https://shopifyorder.herokuapp.com/orders'
 #print(response.content)
 
 param={
-       "name":"bundies-com",
+       "name":"test",
        "email":"woonzh@hotmail.com",
        "apikey":"97b0d33bfea5fabe4304059aad30e61d",
        "password":"e02949c37facc1bbecf27310042b1431",
@@ -24,5 +24,5 @@ param={
        }
 
 url='https://shopifyorder.herokuapp.com/createAccount'
-response = requests.post(url, params=param)
+response = requests.get(url, params=param)
 print(response.content)
