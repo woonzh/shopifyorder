@@ -108,6 +108,50 @@ class AccountDetails(Resource):
         except ps.Error as e:
             msg=e.pgerror
             return msg
+        
+class DeleteAccount(Resource):
+    def connectToDatabase(url):
+        os.environ['DATABASE_URL'] = url
+                   
+        parse.uses_netloc.append('postgres')
+        url=parse.urlparse(os.environ['DATABASE_URL'])
+        
+        conn=ps.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+                )
+        
+        cur=conn.cursor()
+        
+        return cur, conn
+    
+    def get(self):
+        name = request.args.get("name" ,type = str)
+
+        result={}
+        url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+        query="DELETE FROM keys WHERE shopname = '" +name+"'"
+        
+        print(query)
+        try:
+            cur, conn=Accounts.connectToDatabase(url)
+            cur.execute(query)
+            cur.close()
+            conn.commit()
+            
+            result['result']="Success"
+            print("success")
+        except ps.Error as e:
+            result['result']="fail"
+            print("fail")
+        
+        resp = flask.Response(json.dumps(result))
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
+    
 
 class CreateAccount(Resource):
     def connectToDatabase(url):
