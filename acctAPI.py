@@ -233,6 +233,7 @@ api.add_resource(Accounts, '/accounts')
 api.add_resource(Orders, '/orders')
 api.add_resource(CreateAccount, "/createAccount")
 api.add_resource(AccountDetails, "/accountDetails")
+api.add_resource(DeleteAccount, "/deleteAccount")
 
 if __name__ == '__main__':
      app.run(debug=True)
