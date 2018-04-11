@@ -62,6 +62,52 @@ class Accounts(Resource):
         except ps.Error as e:
             msg=e.pgerror
             return msg
+        
+class AccountDetails(Resource):    
+    def connectToDatabase(url):
+        os.environ['DATABASE_URL'] = url
+                   
+        parse.uses_netloc.append('postgres')
+        url=parse.urlparse(os.environ['DATABASE_URL'])
+        
+        conn=ps.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+                )
+        
+        cur=conn.cursor()
+        
+        return cur, conn
+    
+    def get(self):
+        url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+        query="SELECT * FROM keys"
+        defaultList=["email","shopname","apikey","pass","sharedsecret"]
+        lst={}
+        count=1
+        try:
+            cur, conn=Accounts.connectToDatabase(url)
+            
+            cur.execute(query)
+            for result in cur:
+                indiv={}
+                for (det, head) in zip(result, defaultList):
+                    indiv[head]=det
+                
+                lst[count]=indiv
+                count+=1
+            
+            cur.close()
+            conn.commit()
+            resp = flask.Response(json.dumps(lst))
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            return resp
+        except ps.Error as e:
+            msg=e.pgerror
+            return msg
 
 class CreateAccount(Resource):
     def connectToDatabase(url):
@@ -142,6 +188,7 @@ class Orders(Resource):
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Orders, '/orders')
 api.add_resource(CreateAccount, "/createAccount")
+api.add_resource(AccountDetails, "/accountDetails")
 
 if __name__ == '__main__':
      app.run(debug=True)
