@@ -15,18 +15,25 @@ import json
 #response = requests.get(url, params=param)
 #print(response.content)
 
-#param={
-#       "name":"test",
-#       "email":"woonzh@hotmail.com",
-#       "apikey":"97b0d33bfea5fabe4304059aad30e61d",
-#       "password":"e02949c37facc1bbecf27310042b1431",
-#       "sharedsecret":"144cae7063ffe3f23ede0911754420ba"
-#       }
-#
-#url='https://shopifyorder.herokuapp.com/createAccount'
-#response = requests.get(url, params=param)
+param={
+       "name":"woonzh",
+       "email":"woonzh@hotmail.com",
+       "apikey":"d65bb311b92444b3ab661639c1ceeee9",
+       "password":"f973e5eabe90af1d7c9f3faeed311f8e",
+       "sharedsecret":"c73d622d538b5e1520967127bda26810"
+       }
+
+url='https://shopifyorder.herokuapp.com/createAccount'
+response = requests.get(url, params=param)
+print(response.content)
+
+#url='https://shopifyorder.herokuapp.com/accountDetails'
+#response = requests.get(url)
 #print(response.content)
 
-url='https://shopifyorder.herokuapp.com/accountDetails'
-response = requests.get(url)
-print(response.content)
+#url='https://shopifyorder.herokuapp.com/deleteAccount'
+#param={
+#       "name":"woonzh"
+#       }
+#response = requests.get(url, params=param)
+#print(response.content)

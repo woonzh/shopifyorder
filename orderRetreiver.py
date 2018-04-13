@@ -79,7 +79,7 @@ def listOrderLines(orders):
         addressLine = address["address1"]+ " " + address["address2"] + " " + address["country"] + " " + address["zip"]
         postal = address["zip"]
         country = address["country"]
-        phone = customer["phone"]
+        phone = address["phone"]
         totPrice = i["total_price"]
         
         items = i["items"]
