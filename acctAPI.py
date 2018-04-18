@@ -198,6 +198,7 @@ class EditAccount(Resource):
             except ps.Error as e:
                 result['result']="fail"
             
+            print(result)
             resp = flask.Response(json.dumps(result))
             resp.headers['Access-Control-Allow-Origin'] = '*'
             return resp
