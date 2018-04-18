@@ -195,7 +195,7 @@ class EditAccount(Resource):
                 conn.commit()
                 
                 result['result']="Success"
-            except ps.Error as e:
+            except:
                 result['result']="fail"
             
             print(result)
@@ -259,7 +259,7 @@ class CreateAccount(Resource):
                 conn.commit()
                 
                 result['result']="Success"
-            except ps.Error as e:
+            except:
                 result['result']="fail"
             
             resp = flask.Response(json.dumps(result))
