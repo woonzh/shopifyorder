@@ -186,7 +186,7 @@ class EditAccount(Resource):
             lstLen=len(lst)
             track=1
             url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
-            query="UPDATE keys SET shopname='%s' email='%s', apikey='%s', pass='%s', sharedsecret='%s' WHERE shopname=%s" % (lst[0],lst[1],lst[2],lst[3],lst[4],lst[0])
+            query="UPDATE keys SET shopname='%s', email='%s', apikey='%s', pass='%s', sharedsecret='%s' WHERE shopname=%s" % (lst[0],lst[1],lst[2],lst[3],lst[4],lst[0])
             print(query)
             try:
                 cur, conn=Accounts.connectToDatabase(url)
