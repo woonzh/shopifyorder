@@ -152,6 +152,62 @@ class DeleteAccount(Resource):
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     
+class EditAccount(Resource):
+    def connectToDatabase(url):
+        os.environ['DATABASE_URL'] = url
+                   
+        parse.uses_netloc.append('postgres')
+        url=parse.urlparse(os.environ['DATABASE_URL'])
+        
+        conn=ps.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+                )
+        
+        cur=conn.cursor()
+        
+        return cur, conn
+    
+    def get(self):
+        lst=[]
+        result={}
+        lst.append(request.args.get("name" ,type = str))
+        lst.append(request.args.get("email" ,type = str))
+        lst.append(request.args.get("apikey" ,type = str))
+        lst.append(request.args.get("password" ,type = str))
+        lst.append(request.args.get("sharedsecret" ,type = str))
+        
+        acctValid=kr.validateAcct(lst[2],lst[3],lst[0])
+        
+        if acctValid:
+            lstLen=len(lst)
+            track=1
+            url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
+            query="UPDATE keys SET shopname='%s' email='%s', apikey='%s', pass='%s', sharedsecret='%s' WHERE shopname=%s" % (lst[0],lst[1],lst[2],lst[3],lst[4],lst[5],lst[0])
+            print(query)
+            try:
+                cur, conn=Accounts.connectToDatabase(url)
+                cur.execute(query)
+                cur.close()
+                conn.commit()
+                
+                result['result']="Success"
+            except ps.Error as e:
+                result['result']="fail"
+            
+            resp = flask.Response(json.dumps(result))
+            resp.headers['Access-Control-Allow-Origin'] = '*'
+            return resp
+        else:
+            result['result']="Account credential invalid"
+            
+        print(result)
+        resp = flask.Response(json.dumps(result))
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
 
 class CreateAccount(Resource):
     def connectToDatabase(url):
@@ -202,18 +258,16 @@ class CreateAccount(Resource):
                 conn.commit()
                 
                 result['result']="Success"
-                print("success")
             except ps.Error as e:
                 result['result']="fail"
-                print("fail")
             
             resp = flask.Response(json.dumps(result))
             resp.headers['Access-Control-Allow-Origin'] = '*'
             return resp
         else:
             result['result']="Account credential invalid"
-            print("fail")
             
+        print(result)
         resp = flask.Response(json.dumps(result))
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
@@ -234,6 +288,7 @@ api.add_resource(Orders, '/orders')
 api.add_resource(CreateAccount, "/createAccount")
 api.add_resource(AccountDetails, "/accountDetails")
 api.add_resource(DeleteAccount, "/deleteAccount")
+api.add_resource(EditAccount, "/editaccount")
 
 if __name__ == '__main__':
      app.run(debug=True)
