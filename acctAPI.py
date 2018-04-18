@@ -198,10 +198,6 @@ class EditAccount(Resource):
             except:
                 result['result']="fail"
             
-            print(result)
-            resp = flask.Response(json.dumps(result))
-            resp.headers['Access-Control-Allow-Origin'] = '*'
-            return resp
         else:
             result['result']="Account credential invalid"
             
@@ -262,9 +258,6 @@ class CreateAccount(Resource):
             except:
                 result['result']="fail"
             
-            resp = flask.Response(json.dumps(result))
-            resp.headers['Access-Control-Allow-Origin'] = '*'
-            return resp
         else:
             result['result']="Account credential invalid"
             
