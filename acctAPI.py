@@ -185,7 +185,7 @@ class CreateAccount(Resource):
                 
                 result['result']="Success"
             except ps.Error as e:
-                result['result']=e
+                result['result']=str(e)
             
         else:
             result['result']="Account credential invalid"
