@@ -108,11 +108,10 @@ class DeleteAccount(Resource):
             conn.commit()
             
             result['result']="Success"
-            print("success")
         except ps.Error as e:
-            result['result']="fail"
-            print("fail")
+            result['result']=str(e)
         
+        print(result)
         resp = flask.Response(json.dumps(result))
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
@@ -141,8 +140,8 @@ class EditAccount(Resource):
                 conn.commit()
                 
                 result['result']="Success"
-            except:
-                result['result']="fail"
+            except ps.Error as e:
+                result['result']=str(e)
             
         else:
             result['result']="Account credential invalid"
@@ -185,7 +184,7 @@ class CreateAccount(Resource):
                 
                 result['result']="Success"
             except ps.Error as e:
-                result['result']=str(e)
+                result['result']=e.pgerror
             
         else:
             result['result']="Account credential invalid"
