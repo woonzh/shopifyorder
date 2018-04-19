@@ -179,6 +179,7 @@ class EditAccount(Resource):
         lst.append(request.args.get("apikey" ,type = str))
         lst.append(request.args.get("password" ,type = str))
         lst.append(request.args.get("sharedsecret" ,type = str))
+        print("Edit account params received: name=%s, email=%s, apikey=%s, password=%s, sharedsecret=%s" % (lst[0],lst[1],lst[2],lst[3],lst[4]))
         
         acctValid=kr.validateAcct(lst[2],lst[3],lst[0])
         
@@ -233,6 +234,7 @@ class CreateAccount(Resource):
         lst.append(request.args.get("apikey" ,type = str))
         lst.append(request.args.get("password" ,type = str))
         lst.append(request.args.get("sharedsecret" ,type = str))
+        print("Create Account params received: name=%s, email=%s, apikey=%s, password=%s, sharedsecret=%s" % (lst[0],lst[1],lst[2],lst[3],lst[4]))
         
         acctValid=kr.validateAcct(lst[2],lst[3],lst[0])
         
