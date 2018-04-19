@@ -19,7 +19,7 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)
 
-class Accounts(Resource):    
+class Common():
     def connectToDatabase(url):
         os.environ['DATABASE_URL'] = url
                    
@@ -37,13 +37,14 @@ class Accounts(Resource):
         cur=conn.cursor()
         
         return cur, conn
-    
+
+class Accounts(Resource):        
     def get(self):
         url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
         query="SELECT * FROM keys"
         lst=[]
         try:
-            cur, conn=Accounts.connectToDatabase(url)
+            cur, conn=Common.connectToDatabase(url)
             
             cur.execute(query)
             for result in cur:
@@ -64,24 +65,6 @@ class Accounts(Resource):
             return msg
         
 class AccountDetails(Resource):    
-    def connectToDatabase(url):
-        os.environ['DATABASE_URL'] = url
-                   
-        parse.uses_netloc.append('postgres')
-        url=parse.urlparse(os.environ['DATABASE_URL'])
-        
-        conn=ps.connect(
-                database=url.path[1:],
-                user=url.username,
-                password=url.password,
-                host=url.hostname,
-                port=url.port
-                )
-        
-        cur=conn.cursor()
-        
-        return cur, conn
-    
     def get(self):
         url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
         query="SELECT * FROM keys"
@@ -89,7 +72,7 @@ class AccountDetails(Resource):
         lst={}
         count=1
         try:
-            cur, conn=Accounts.connectToDatabase(url)
+            cur, conn=Common.connectToDatabase(url)
             
             cur.execute(query)
             for result in cur:
@@ -109,25 +92,7 @@ class AccountDetails(Resource):
             msg=e.pgerror
             return msg
         
-class DeleteAccount(Resource):
-    def connectToDatabase(url):
-        os.environ['DATABASE_URL'] = url
-                   
-        parse.uses_netloc.append('postgres')
-        url=parse.urlparse(os.environ['DATABASE_URL'])
-        
-        conn=ps.connect(
-                database=url.path[1:],
-                user=url.username,
-                password=url.password,
-                host=url.hostname,
-                port=url.port
-                )
-        
-        cur=conn.cursor()
-        
-        return cur, conn
-    
+class DeleteAccount(Resource): 
     def get(self):
         name = request.args.get("name" ,type = str)
 
@@ -137,7 +102,7 @@ class DeleteAccount(Resource):
         
         print(query)
         try:
-            cur, conn=Accounts.connectToDatabase(url)
+            cur, conn=Common.connectToDatabase(url)
             cur.execute(query)
             cur.close()
             conn.commit()
@@ -152,25 +117,7 @@ class DeleteAccount(Resource):
         resp.headers['Access-Control-Allow-Origin'] = '*'
         return resp
     
-class EditAccount(Resource):
-    def connectToDatabase(url):
-        os.environ['DATABASE_URL'] = url
-                   
-        parse.uses_netloc.append('postgres')
-        url=parse.urlparse(os.environ['DATABASE_URL'])
-        
-        conn=ps.connect(
-                database=url.path[1:],
-                user=url.username,
-                password=url.password,
-                host=url.hostname,
-                port=url.port
-                )
-        
-        cur=conn.cursor()
-        
-        return cur, conn
-    
+class EditAccount(Resource):   
     def get(self):
         lst=[]
         result={}
@@ -184,13 +131,11 @@ class EditAccount(Resource):
         acctValid=kr.validateAcct(lst[2],lst[3],lst[0])
         
         if acctValid:
-            lstLen=len(lst)
-            track=1
             url="postgres://lpwrkshmpfsrds:f6d80a024a0defe3141d7bdb31279891768d47421020320c32c7ea26f9909255@ec2-23-21-217-27.compute-1.amazonaws.com:5432/d246lgdkkjq0sr"
             query="UPDATE keys SET shopname='%s', email='%s', apikey='%s', pass='%s', sharedsecret='%s' WHERE shopname='%s'" % (lst[0],lst[1],lst[2],lst[3],lst[4],lst[0])
             print(query)
             try:
-                cur, conn=Accounts.connectToDatabase(url)
+                cur, conn=Common.connectToDatabase(url)
                 cur.execute(query)
                 cur.close()
                 conn.commit()
@@ -208,24 +153,6 @@ class EditAccount(Resource):
         return resp
 
 class CreateAccount(Resource):
-    def connectToDatabase(url):
-        os.environ['DATABASE_URL'] = url
-                   
-        parse.uses_netloc.append('postgres')
-        url=parse.urlparse(os.environ['DATABASE_URL'])
-        
-        conn=ps.connect(
-                database=url.path[1:],
-                user=url.username,
-                password=url.password,
-                host=url.hostname,
-                port=url.port
-                )
-        
-        cur=conn.cursor()
-        
-        return cur, conn
-    
     def get(self):
         lst=[]
         result={}
@@ -251,7 +178,7 @@ class CreateAccount(Resource):
             query +=")"
             print(query)
             try:
-                cur, conn=Accounts.connectToDatabase(url)
+                cur, conn=Common.connectToDatabase(url)
                 cur.execute(query)
                 cur.close()
                 conn.commit()
