@@ -184,8 +184,8 @@ class CreateAccount(Resource):
                 conn.commit()
                 
                 result['result']="Success"
-            except:
-                result['result']="fail"
+            except ps.OperationalError as e:
+                result['result']="e"
             
         else:
             result['result']="Account credential invalid"
