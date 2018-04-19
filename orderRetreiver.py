@@ -44,16 +44,16 @@ def main(shopName):
         orders = process(json.loads(response))
         orderDf = listOrderLines(orders)
         name = shopName+' '+datetime.datetime.now().strftime("%d-%m-%y_%H-%M-%S")+'.csv'
-        writeSummary()
+        writeSummary(shopName)
         return name, orderDf
     else:
         return "fail", response
 
-def writeSummary():
+def writeSummary(name):
     global summary
     
     summary='\n'+str(totOrds)+' total orders, '+str(unfulfilOrds)+' unfulfilled orders, '+str(newUnfulfilOrds)+ ' new orders, '+str(newLineItems)+ ' new line items. \n'
-    print(summary)
+    print(name+summary)
     summary+='\n'+'[SO number-SKU-quantity-unit price-SO price]\n'
 
 def writeToFile(acct, orders):
