@@ -55,6 +55,8 @@ class Accounts(Resource):
                     "names":lst
                     }
             
+            print(result)
+            
             cur.close()
             conn.commit()
             resp = flask.Response(json.dumps(result))
@@ -83,6 +85,7 @@ class AccountDetails(Resource):
                 lst[count]=indiv
                 count+=1
             
+            print(result)
             cur.close()
             conn.commit()
             resp = flask.Response(json.dumps(lst))
