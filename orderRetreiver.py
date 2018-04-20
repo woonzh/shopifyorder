@@ -38,7 +38,6 @@ def main(shopName):
     init(shopName, mainUrl)
     
     success, response = con.connect(url, "", "get")
-    print(response)
     
     if success:
         orders = process(json.loads(response))
