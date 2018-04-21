@@ -207,6 +207,15 @@ class Orders(Resource):
         resp.headers['Access-Control-Allow-Origin'] = '*'
         resp.headers["Content-Type"] = "text/csv"
         return resp
+    
+class OrderData(Resource):
+    def get(self):
+        name=request.arg.get("name", type=str)
+        print(name)
+        name, result=orr.rawData(name)
+        resp = flask.Response(json.dumps(result))
+        resp.headers['Access-Control-Allow-Origin'] = '*'
+        return resp
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Orders, '/orders')
@@ -214,6 +223,7 @@ api.add_resource(CreateAccount, "/createAccount")
 api.add_resource(AccountDetails, "/accountDetails")
 api.add_resource(DeleteAccount, "/deleteAccount")
 api.add_resource(EditAccount, "/editaccount")
+api.add_resource(OrderData, "/orderdata)
 
 if __name__ == '__main__':
      app.run(debug=True)

@@ -32,8 +32,8 @@ def init(acct,mainUrl):
     url = kr.getUrl(mainUrl, "orders")
     newRec = pd.DataFrame(columns = ['order number', 'price', 'date', 'account'])
     summary=''
-
-def main(shopName):
+    
+def rawData(shopName):
     mainUrl=kr.getMainUrl(shopName)
     init(shopName, mainUrl)
     
@@ -41,12 +41,19 @@ def main(shopName):
     
     if success:
         orders = process(json.loads(response))
-        orderDf = listOrderLines(orders)
+        return shopName, orders
+    else:
+        return "fail", response
+
+def main(shopName):
+    suc, response=rawData(shopName)
+    if (suc == "fail"):
+        return "fail", response
+    else:
+        orderDf = listOrderLines(response)
         name = shopName+' '+datetime.datetime.now().strftime("%d-%m-%y_%H-%M-%S")+'.csv'
         writeSummary(shopName)
         return name, orderDf
-    else:
-        return "fail", response
 
 def writeSummary(name):
     global summary
