@@ -10,6 +10,7 @@ import os
 from urllib import parse
 import psycopg2 as ps
 import connector as con
+import datetime
 
 link = 'keys/keys.csv'
 
@@ -68,8 +69,20 @@ def getUrl(url, name):
     
     return final_url
 
-def addDate(url, dateStart, dateEnd):
-    finalUrl=url+("?created_at_min=%s?created_at_max=%s" % (dateStart, dateEnd))
+def dateConvert():
+    enddate=datetime.datetime.now()
+    startdate=enddate-datetime.timedelta(days=-1)
+    
+    edstr=enddate.strftime("%Y-%m-%d %H:%M:%S ")+"EDT +12:00"
+    sdstr=startdate.strftime("%Y-%m-%d %H:%M:%S ")+"EDT +12:00"
+    
+    return sdstr,edstr
+
+s,e=dateConvert()
+
+def addDate(url):
+    startdate, enddate=dateConvert()
+    finalUrl=url+("?created_at_min=%s?created_at_max=%s" % (startdate, enddate))
     
     return finalUrl
 

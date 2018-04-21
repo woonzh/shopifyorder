@@ -21,6 +21,7 @@ unfulfilOrds = 0
 newUnfulfilOrds = 0
 newLineItems = 0
 summary=''
+check=True
 
 def init(acct,mainUrl):
     global totOrds, unfulfilOrds, newUnfulfilOrds, newLineItems, account, url, newRec, summary
@@ -33,7 +34,31 @@ def init(acct,mainUrl):
     newRec = pd.DataFrame(columns = ['order number', 'price', 'date', 'account'])
     summary=''
     
+def getAllFilteredData(shopName):
+    global check, url
+    mainUrl=kr.getMainUrl(shopName)
+    init(shopName, mainUrl)
+    check=False
+#    url=kr.addDate(url)
+    success, response = con.connect(url, "", "get")
+    if success:
+        orders = process(json.loads(response))
+        orderCount=0
+        itemCount=0
+        rev=0
+        for i in orders:
+            order=orders[i]
+            price=float(order["total_price"])
+            items=len(order["items"])
+            orderCount+=1
+            rev+=price
+            itemCount+=items
+        return orderCount,itemCount,rev
+    else:
+        return "fail"
+    
 def rawData(shopName):
+    global url
     mainUrl=kr.getMainUrl(shopName)
     init(shopName, mainUrl)
     
@@ -105,7 +130,10 @@ def listOrderLines(orders):
     return df  
 
 def orderOk(tem):
-    global unfulfilOrds, newUnfulfilOrds, ordHist
+    global unfulfilOrds, newUnfulfilOrds, ordHist, check
+    
+    if (check==False):
+        return True
     
     try:
 #        if tem["financial_status"]=="authorized" and len(tem["fulfillments"])==0:
@@ -147,3 +175,7 @@ def process(response):
             count +=1
             
     return df
+
+#name,df=rawData("woonzh")
+#df=getAllFilteredData("woonzh")
+a,b,c=getAllFilteredData("woonzh")

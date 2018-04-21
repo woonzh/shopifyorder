@@ -208,14 +208,24 @@ class Orders(Resource):
         resp.headers["Content-Type"] = "text/csv"
         return resp
     
-class OrderData(Resource):
+class OrderData(Resource):    
     def get(self):
-        name=request.arg.get("name", type=str)
-        print(name)
-        name, result=orr.rawData(name)
-        resp = flask.Response(json.dumps(result))
-        resp.headers['Access-Control-Allow-Origin'] = '*'
-        return resp
+        t=Accounts
+        acct=t.get('')
+        resp=json.loads((acct.response)[0])
+        names=resp["names"]
+        result={}
+        
+        for name in names:
+            
+            ordCount, itemCount, rev=orr.getAllFilteredData(name)
+            result[name]={
+                    "ordCount":ordCount,
+                    "itemCount":itemCount,
+                    "rev":rev
+                    }
+            
+        return result
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Orders, '/orders')
