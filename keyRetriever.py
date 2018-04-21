@@ -68,6 +68,11 @@ def getUrl(url, name):
     
     return final_url
 
+def addDate(url, dateStart, dateEnd):
+    finalUrl=url+("?created_at_min=%s?created_at_max=%s" % (dateStart, dateEnd))
+    
+    return finalUrl
+
 def validateAcct(key, password, name):
     mainurl= "https://%s:%s@%s.myshopify.com/admin/" % (key, password, name)
     url=getUrl(mainurl,"locations")
