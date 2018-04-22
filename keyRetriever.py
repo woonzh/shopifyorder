@@ -71,10 +71,10 @@ def getUrl(url, name):
 
 def dateConvert():
     enddate=datetime.datetime.now()
-    startdate=enddate-datetime.timedelta(days=-1)
+    startdate=enddate-datetime.timedelta(days=1)
     
-    edstr=enddate.strftime("%Y-%m-%d %H:%M:%S ")+"EDT +12:00"
-    sdstr=startdate.strftime("%Y-%m-%d %H:%M:%S ")+"EDT +12:00"
+    edstr=enddate.strftime("%Y-%m-%dT%H:%M:%S")+"+12:00"
+    sdstr=startdate.strftime("%Y-%m-%dT%H:%M:%S")+"+12:00"
     
     return sdstr,edstr
 

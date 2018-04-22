@@ -39,8 +39,10 @@ def getAllFilteredData(shopName):
     mainUrl=kr.getMainUrl(shopName)
     init(shopName, mainUrl)
     check=False
-#    url=kr.addDate(url)
+    url=kr.addDate(url)
+    print(url)
     success, response = con.connect(url, "", "get")
+    return response
     if success:
         orders = process(json.loads(response))
         orderCount=0
@@ -178,4 +180,5 @@ def process(response):
 
 #name,df=rawData("woonzh")
 #df=getAllFilteredData("woonzh")
-a,b,c=getAllFilteredData("woonzh")
+#order=getAllFilteredData("woonzh")
+#df=json.loads(order)
