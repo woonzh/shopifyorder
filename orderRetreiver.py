@@ -109,6 +109,7 @@ def listOrderLines(orders):
         customer = i["customer"]
         contact = customer["first_name"]+ " " + customer["last_name"]
         address = customer["default_address"]
+        print(address)
         addressLine = address["address1"]+ " " + address["address2"] + " " + address["country"] + " " + address["zip"]
         postal = address["zip"]
         country = address["country"]
@@ -177,6 +178,8 @@ def process(response):
             count +=1
             
     return df
+
+#name,df=rawData('bundies-com')
 
 #name,df=rawData("woonzh")
 #df=getAllFilteredData("woonzh")
