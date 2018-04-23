@@ -96,7 +96,7 @@ def parseNone(word):
     if (word=="None"):
         return ""
     else:
-        return ""
+        return word
 
 def listOrderLines(orders):
     df=pd.DataFrame(columns = ['SO Identifier', 'Item SKU', 'Payment Terms', 'Ship Date', 'Ship Time', 'Ship to Contact', 
@@ -115,7 +115,6 @@ def listOrderLines(orders):
         customer = i["customer"]
         contact = customer["first_name"]+ " " + customer["last_name"]
         address = customer["default_address"]
-        print(address)
         addressLine = parseNone(address["address1"])+ " " + parseNone(address["address2"]) + " " + parseNone(address["country"]) + " " + parseNone(address["zip"])
         postal = address["zip"]
         country = address["country"]
