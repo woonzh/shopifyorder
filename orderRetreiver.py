@@ -93,10 +93,10 @@ def writeToFile(acct, orders):
     mr.writeToTemplate(orders, acct)
     
 def parseNone(word):
-    if (word=="None"):
+    if (str(word)=="None"):
         return ""
     else:
-        return word
+        return str(word)
 
 def listOrderLines(orders):
     df=pd.DataFrame(columns = ['SO Identifier', 'Item SKU', 'Payment Terms', 'Ship Date', 'Ship Time', 'Ship to Contact', 
