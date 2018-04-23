@@ -91,6 +91,12 @@ def writeSummary(name):
 
 def writeToFile(acct, orders):
     mr.writeToTemplate(orders, acct)
+    
+def parseNone(word):
+    if (word=="None"):
+        return ""
+    else:
+        return ""
 
 def listOrderLines(orders):
     df=pd.DataFrame(columns = ['SO Identifier', 'Item SKU', 'Payment Terms', 'Ship Date', 'Ship Time', 'Ship to Contact', 
@@ -110,7 +116,7 @@ def listOrderLines(orders):
         contact = customer["first_name"]+ " " + customer["last_name"]
         address = customer["default_address"]
         print(address)
-        addressLine = address["address1"]+ " " + address["address2"] + " " + address["country"] + " " + address["zip"]
+        addressLine = parseNone(address["address1"])+ " " + parseNone(address["address2"]) + " " + parseNone(address["country"]) + " " + parseNone(address["zip"])
         postal = address["zip"]
         country = address["country"]
         phone = address["phone"]
