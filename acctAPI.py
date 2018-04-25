@@ -20,7 +20,7 @@ api = Api(app)
 CORS(app)
 
 @app.route('/')
-def hello(name=None):
+def hello():
     return render_template('test.html')
 
 class Common():
