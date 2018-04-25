@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:300|Oswald');
+
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height:100%;
+    width:100%;
+    cursor: not-allowed;
+    opacity: 0.5;
+    background: #000000 url('loading.gif') center no-repeat;
+    z-index: 99;
+}
+
+#newAcct .submit:hover{
+    background-color: #444b5d;
+    color: #fff;
+}
+
+#newAcct .submit{
+    background: #82CCC8;
+    padding: 13px 20px;
+    color: #fff;
+    font-family: oswald, sans-serif;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    min-width: 400px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 400;
+    border-radius: 0;
+    border: 0;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Form fields */
+#booking-form {
+     font-family: 'Merriweather', serif;
+    max-width: 540px;
+  margin: 40px auto;
+}
+#booking-form ul {
+  padding-left: 0;
+}
+#booking-form li {
+  list-style: none;
+}
+#booking-form input,
+#booking-form textarea,
+#booking-form select {
+    font-size: 18px;
+    padding: 0 28px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgb(233,233,233);
+    text-align: left;
+    border-radius: 35px;
+    color: #000000;
+
+    letter-spacing: normal;
+    height: 50px;
+    line-height: 50px;
+    font-family: 'Merriweather', serif;
+    background: #fff;
+  margin-bottom: 20px;
+}
+#booking-form select {
+    background: url('https://seashineadventures.com/wp-content/uploads/2017/08/grey-chevron.png') no-repeat;
+    -webkit-appearance: none;
+    appearance: none;
+    background-size: 15px;
+    background-position: 97% 50%;
+
+}
+#booking-form textarea {
+    height: 120px;
+    line-height: 1.5;
+    padding: 15px 28px;
+}
+#booking-form input:focus,
+#booking-form textarea:focus,
+#booking-form select:focus {
+    outline: 0;
+    border: 1px solid rgb(211,211,211);
+}
+#booking-form label {
+    font-size: 18px;
+    font-weight: 300;
+  display: block;
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+#booking-form .next-btn{
+    background: #82CCC8;
+    padding: 13px 20px;
+    color: #fff;
+    font-family: oswald, sans-serif;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    min-width: 400px;
+    display: inline-block;
+    text-align: center;
+    font-weight: 400;
+    border-radius: 0;
+    border: 0;
+    transition-property: background-color;
+    transition-duration: 0.5s;
+    width: 100%;
+    cursor: pointer;
+}
+
+#booking-form .next-btn:hover{
+    background-color: #444b5d;
+    color: #fff;
+}
+
+/* Error */
+span.error {
+  font-size: 12px;
+  font-family: "helvetica neue", arial, sans-serif;
+  color: #D6041D;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
