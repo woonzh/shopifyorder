@@ -21,7 +21,7 @@ CORS(app)
 
 @app.route('/')
 def hello():
-    return render_template('test.html')
+    return render_template('home.html')
 
 class Common():
     def connectToDatabase(url):
