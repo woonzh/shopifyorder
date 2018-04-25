@@ -24,7 +24,7 @@ def hello():
     return render_template('home.html')
 
 @app.route('/account')
-def hello():
+def account():
     return render_template('account.html')
 
 class Common():
