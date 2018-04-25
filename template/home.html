@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>UrbanFox</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
+      <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body onload="onload()">
+
+<form action="#" id="loading">
+
+</form>
+
+
+<form action="#" id="booking-form">
+
+		<div class="tab-content">
+			<div class="tab-pane" id="step1">
+				<ul>
+					<li>
+            <h1>Extract Shopify orders</h1>
+            <label>Which account to download order csv for?</label>
+            <div class="errorTxt"></div>
+            <select class="cust_list" name="bf_totalGuests" id="cust_list" required>
+              <option value="">Select</option>
+					</select>
+				 </li>
+				 <li style="list-style: none; display: inline">
+						<button class="next-btn" type="button" type="click" onclick="butClick()">Generate</button>
+					</li>
+				</ul>
+			</div>
+</form>
+
+<br></br>
+
+<h2> List of accounts </h2>
+<button onclick="location.href='account.html'" type="button" id="export-btn" class="btn btn-primary" >Account details</button>
+<br></br>
+<table id="acctTable">
+
+</table>
+
+<br></br>
+<h2> Create New Account </h2>
+
+<form action="#" id="newAcct">
+  Account Name:<br>
+  <input type="text" id="name" class='fields'><br>
+  email:<br>
+  <input type="text" id="email" class='fields'><br>
+  API Key:<br>
+  <input type="text" id="apikey" class='fields'><br>
+  Password:<br>
+  <input type="text" id="password" class='fields'><br>
+  Shared Secret:<br>
+  <input type="text" id="sharedsecret" class='fields'><br>
+  <input type="button" id="acctSubmit" class="submit" value="Submit" onclick="createAccount();">
+</form>
+
+</body>
+
+</html>
