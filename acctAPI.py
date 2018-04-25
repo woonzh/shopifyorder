@@ -23,6 +23,10 @@ CORS(app)
 def hello():
     return render_template('home.html')
 
+@app.route('/account')
+def hello():
+    return render_template('account.html')
+
 class Common():
     def connectToDatabase(url):
         os.environ['DATABASE_URL'] = url
