@@ -23,7 +23,7 @@ CORS(app)
 def hello():
     return render_template('home.html')
 
-@app.route('/account')
+@app.route('/', subdomain="account")
 def account():
     return render_template('account.html')
 
